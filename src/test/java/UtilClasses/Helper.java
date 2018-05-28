@@ -19,18 +19,4 @@ public class Helper {
         return saltStr;
     }
 
-    public static String getlastWordOfLink(String link){
-        char[] linkAsChar = link.toCharArray();
-        String result = "";
-        for (int i = linkAsChar.length - 1; i >= 0; i--){
-            if (linkAsChar[i] != '#'){result += String.valueOf(linkAsChar[i]);}
-            else {break;}
-        }
-        char[] wordAsCharViceVersa = result.toCharArray();
-        result = "";
-        for(int i = wordAsCharViceVersa.length - 1; i >=0; i--){
-            result += String.valueOf(linkAsChar[i]);
-        }
-        return result;
-    }
 }

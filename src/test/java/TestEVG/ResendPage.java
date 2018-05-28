@@ -1,16 +1,12 @@
 package TestEVG;
 
 import UtilClasses.Helper;
-import junit.framework.AssertionFailedError;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import static TestEVG.EVGTests.driver;
-//import static TestEVG.EVGTests.executor;
-import static TestEVG.EVGTests.executor;
-import static TestEVG.EVGTests.webDriverWait;
+import static TestEVG.WrikeTests.driver;
+import static TestEVG.WrikeTests.webDriverWait;
 
 public class ResendPage {
 
@@ -19,9 +15,7 @@ public class ResendPage {
     private By submitResultsButton = By.xpath("//div[@class='survey']//button[@type='submit']");
     private By messageAfterSuccessfulSending = By.xpath("//div[@class='survey-success']//h3");
     private By addedItemInMassageAfterClickResendEmailButton = By.xpath("//div[@class='wg-cell wg-cell--order-1 wg-cell--md-5 wg-cell--md-5 wg-cell--md-offset-1 wg-cell--lg-4 wg-cell--lg-offset-1']//span[@class='again']");
-    private By iconsOfOtherServices = By.xpath("//div[@class='wg-footer__social-block']//ul[@class='wg-footer__social-list']/li");
-    private String linkTwitterWrike = "https://twitter.com/wrike";
-    private String expectedPathOfSVGTwitter = "M14.2 3.2v.42A9.23 9.23 0 0 1-.01 11.39a6.66 6.66 0 0 0 .78 0 6.5 6.5 0 0 0 4-1.38 3.25 3.25 0 0 1-3-2.25 4.21 4.21 0 0 0 .61 0 3.42 3.42 0 0 0 .85-.11 3.24 3.24 0 0 1-2.6-3.18 3.27 3.27 0 0 0 1.47.41 3.25 3.25 0 0 1-1-4.34 9.22 9.22 0 0 0 6.69 3.39 3.66 3.66 0 0 1-.08-.74A3.25 3.25 0 0 1 13.32.97a6.39 6.39 0 0 0 2.06-.78 3.23 3.23 0 0 1-1.43 1.79 6.5 6.5 0 0 0 1.87-.5A7 7 0 0 1 14.2 3.2z";
+    private String urlSVGIcons = "https://www.wrike.com/content/themes/wrike/dist/img/sprite/vector/footer-icons.symbol.svg?v1";
 
     public String getCurrentURL(){
         webDriverWait.until(ExpectedConditions.presenceOfElementLocated(formQuestionnaire));
@@ -60,27 +54,26 @@ public class ResendPage {
         return driver.findElement(resendEmailButton).getAttribute("style");
     }
 
-    public void checkThatTwitterIconExists(){
-        int numberOfIcons = driver.findElements(iconsOfOtherServices).size();
-        boolean b = false;
-        for(int i = 1; i <= numberOfIcons; i++){
-            String linkSVG = driver.findElement(By.xpath("//div[@class='wg-footer__social-block']//li[" + i + "]//*[name() = 'use']")).getAttribute("xlink:href");
-            String lastWordOfLink = Helper.getlastWordOfLink(linkSVG);
-            if (lastWordOfLink == "twitter"){
-                String linkOfIcon = driver.findElement(By.xpath("//ul[@class='wg-footer__social-list']/li[" + i + "]/a")).getAttribute("href");
-                if (!linkOfIcon.equals(linkTwitterWrike)){
-                    throw new AssertionError("Ссылка не соответствует иконке твиттера");
-                }
-                driver.get("https://www.wrike.com" + linkSVG);
-                String actualPathOfSVG = driver.findElement(By.xpath("//*[@id='twitter']//*[name() = 'path']")).getAttribute("d");
-                if (!actualPathOfSVG.equals(expectedPathOfSVGTwitter)){
-                    throw new AssertionError("ого не соответствует логотипу Твиттера");
-                }
-                break;
-            }
-
+    public void checkThatTheIconExistsInTheSectionFollowUs(String icon){
+        int numberOfIcons = driver.findElements(By.xpath("//div[@class='wg-footer__social-block']//*[name()='use' and @*='/content/themes/wrike/dist/img/sprite/vector/footer-icons.symbol.svg?v1#" + icon + "']")).size();
+        if(numberOfIcons == 0){
+            throw new NoSuchElementException("icon doesn't exist");
         }
+        else if (numberOfIcons > 1){
+            throw new AssertionError("icon isn't one");
+        }
+
     }
+
+    public String getLinkOfIconFollowUs(String icon){
+        return driver.findElement(By.xpath("//a[child::*[name() = 'svg']/*[name()='use' and @*='/content/themes/wrike/dist/img/sprite/vector/footer-icons.symbol.svg?v1#" + icon + "']]")).getAttribute("href");
+    }
+
+    public String getPathOfSVGIcon(String icon){
+        driver.get(urlSVGIcons);
+        return driver.findElement(By.xpath("//*[@id='" + icon + "']//*[name() = 'path']")).getAttribute("d");
+    }
+
 
 //    public void checkThatTwitterIconExists(){
 //        int numberOfIcons = driver.findElements(iconsOfOtherServices).size();
@@ -103,4 +96,5 @@ public class ResendPage {
 //        WebElement ele = (WebElement)executor.executeScript("return arguments[0].shadowRoot", element);
 //        return ele;
 //    }
+
 }

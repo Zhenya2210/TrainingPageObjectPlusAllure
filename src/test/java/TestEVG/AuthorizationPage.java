@@ -2,7 +2,7 @@ package TestEVG;
 
 import org.openqa.selenium.By;
 
-import static TestEVG.EVGTests.driver;
+import static TestEVG.WrikeTests.driver;
 
 public class AuthorizationPage {
 

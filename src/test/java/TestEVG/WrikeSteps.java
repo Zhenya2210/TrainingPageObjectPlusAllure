@@ -2,94 +2,98 @@ package TestEVG;
 
 import io.qameta.allure.Step;
 
-import static TestEVG.EVGTests.driver;
+import static TestEVG.WrikeTests.driver;
 
-public class EVGSteps {
+public class WrikeSteps {
 
-    @Step("Открытие Wrike")
+    @Step("Open Wrike")
     public void openMainPage() {
         driver.get("https://www.wrike.com");
     }
 
-    @Step("Клик Login")
+    @Step("Click Login")
     public void clickLoginButton() {
-//        MainPage mainPage = new MainPage();
-//        mainPage.clickLoginButton();
         HeaderPage headerPage = new HeaderPage();
         headerPage.clickLoginButton();
     }
 
-    @Step("Клик Create account")
+    @Step("Click Create account")
     public void clickCreateAccountLink() {
         AuthorizationPage authorizationPage = new AuthorizationPage();
         authorizationPage.clickCreateAccountLink();
     }
 
-    @Step("Клик Get started for free")
+    @Step("Click Get started for free")
     public void clickGetStartedForFreeButton() {
-//        StartFreeTrialFormPage freeTrialPage = new StartFreeTrialFormPage();
-//        freeTrialPage.clickGetStartedForFreeButton();
         HeaderPage headerPage = new HeaderPage();
         headerPage.clickGetStartedForFreeButton();
     }
 
-    @Step("Ввод email")
+    @Step("Enter email")
     public void fillInTheEmailField() {
         StartFreeTrialFormPage startFreeTrialFormPage = new StartFreeTrialFormPage();
         startFreeTrialFormPage.fillInTheEmailField();
     }
 
-    @Step("Клик Create my Wrike account")
+    @Step("Click Create my Wrike account")
     public void clickCreateMyWrikeAccountButton() {
         StartFreeTrialFormPage startFreeTrialFormPage = new StartFreeTrialFormPage();
         startFreeTrialFormPage.clickCreateMyWrikeAccountButton();
     }
 
-    @Step("Получить текущий URL страницы")
+    @Step("Get current URL page")
     public String getCurrentURL() {
         ResendPage resendPage = new ResendPage();
         return resendPage.getCurrentURL();
     }
 
-    @Step("Заполнить анкету случайными вариантами ответа")
+    @Step("Fill in the questionnaire with random answers")
     public void fillOutTheQAFormWithRandomOptions() {
         ResendPage resendPage = new ResendPage();
         resendPage.fillOutTheQAFormWithRandomOptions();
     }
 
-    @Step("Получить сообщение после отправки ответов")
+    @Step("Get message after sending replies")
     public String getMessageAfterSuccessfulSending(){
         ResendPage resendPage = new ResendPage();
         return resendPage.getMessageAfterSuccessfulSending();
     }
 
-    @Step("Клик Resend email")
+    @Step("Click Resend email")
     public void clickResendEmailButton(){
         ResendPage resendPage = new ResendPage();
         resendPage.clickResendEmailButton();
     }
 
-    @Step("Получить добавленный фрагмент в сообщении после клика Resend email")
+    @Step("Get the added fragment in the message after click Resend email")
     public String getAddedItemInMassageAfterClickResendEmailButton(){
         ResendPage resendPage = new ResendPage();
         return resendPage.getAddedItemInMassageAfterClickResendEmailButton();
     }
 
-    @Step("Получить стиль кнопки после её нажатия")
+    @Step("Get the style of the button after clicking it")
     public String getStyleResendEmailButtonAfterClick(){
         ResendPage resendPage = new ResendPage();
         return resendPage.getStyleResendEmailButtonAfterClick();
     }
 
-    @Step("Проверить, что иконка твиттера существует")
+    @Step("Check that the Twitter icon exists")
     public void checkThatTwitterIconExists(){
         ResendPage resendPage = new ResendPage();
-        resendPage.checkThatTwitterIconExists();
+        resendPage.checkThatTheIconExistsInTheSectionFollowUs("twitter");
     }
 
+    @Step("Get link of the Twitter icon")
+    public String getLinkOfTwitterIcon(){
+        ResendPage resendPage = new ResendPage();
+        return resendPage.getLinkOfIconFollowUs("twitter");
+    }
 
-
-
+    @Step("Get SVG path of the Twitter icon")
+    public String getSVGPathOfTwitterIcon(){
+        ResendPage resendPage = new ResendPage();
+        return resendPage.getPathOfSVGIcon("twitter");
+    }
 
 
 }

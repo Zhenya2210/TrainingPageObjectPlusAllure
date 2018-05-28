@@ -3,7 +3,7 @@ package TestEVG;
 import UtilClasses.Helper;
 import org.openqa.selenium.By;
 
-import static TestEVG.EVGTests.driver;
+import static TestEVG.WrikeTests.driver;
 
 public class StartFreeTrialFormPage {
 
