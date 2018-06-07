@@ -1,22 +1,20 @@
 package UtilClasses;
 
-import java.util.Random;
-
 public class Helper {
 
     private Helper(){}
 
     public static String getRandomString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabacdefghijklmnopqrstuvwxyz";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        int sizeString = 1 + (int) (Math.random() * 9);
-        while (salt.length() < sizeString) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
+        String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabacdefghijklmnopqrstuvwxyz";
+        char[] symbolsArray = symbols.toCharArray();
+        int sizeResultString = 1 + (int) (Math.random() * 9);
+        String resultString = "";
+        int randomIndex;
+        for (int i = 1; i <= sizeResultString; i++){
+            randomIndex = (int) (Math.random() * (symbolsArray.length - 1));
+            resultString += String.valueOf(symbolsArray[randomIndex]);
         }
-        String saltStr = salt.toString();
-        return saltStr;
+        return resultString;
     }
 
 }
